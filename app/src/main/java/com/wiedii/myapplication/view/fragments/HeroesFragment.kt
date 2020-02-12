@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentTransaction
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.wiedii.myapplication.classes.Heroes
 import com.wiedii.myapplication.view.adapters.HeroesAdapter
@@ -27,8 +28,14 @@ class HeroesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initUi()
-
         adapterHeroes.setData(heroes())
+        setOClickListeners()
+    }
+
+    fun setOClickListeners() {
+        nuevoHeroeFabButton.setOnClickListener {
+           findNavController().navigate(R.id.action_heroesFragment_to_nuevoHeroeFragment)
+        }
     }
 
     fun heroes(): ArrayList<Heroes> {
@@ -88,8 +95,9 @@ class HeroesFragment : Fragment() {
     fun initUi() {
         adapterHeroes = HeroesAdapter {
             val bundle = Bundle()
-            bundle.putSerializable("heroe",it)
-            launchFragment(DetailHeroeFragment.newInstance(bundle),DetailHeroeFragment.TAG)
+            bundle.putSerializable("heroe", it)
+            findNavController().navigate(R.id.action_heroesFragment_to_detailHeroeFragment, bundle)
+            //launchFragment(DetailHeroeFragment.newInstance(bundle),DetailHeroeFragment.TAG)
         }
 
         recyclerViewHeroes.run {
@@ -111,12 +119,12 @@ class HeroesFragment : Fragment() {
         }
     }
 
-    private fun launchFragment(fragment: Fragment, tag: String) {
+    /*private fun launchFragment(fragment: Fragment, tag: String) {
         val fragmentTransaction: FragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.containerMain, fragment, tag)
         fragmentTransaction.addToBackStack(tag)
         fragmentTransaction.commit()
-    }
+    }*/
 
 
 }

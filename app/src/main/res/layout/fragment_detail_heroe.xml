@@ -13,30 +13,41 @@
         android:layout_alignParentStart="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Herore Name" />
+        android:text="@string/herore_name" />
 
     <TextView
-        android:id="@+id/categorieHeroreTextView"
+            android:id="@+id/categorieHeroreTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/nombreHeroeTextView"
-        android:layout_marginTop="10dp"
-        android:text="Categoria Heroe" />
+        android:layout_marginTop="@dimen/dimen10"
+        android:text="@string/categoria_heroe" />
 
     <TextView
         android:id="@+id/tipoHeroe"
         android:layout_alignParentEnd="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Support"/>
+        android:text="@string/posicion"/>
 
     <ImageView
         android:id="@+id/imageHeroeImageView"
-        android:layout_centerInParent="true"
         android:layout_width="300dp"
         android:layout_height="300dp"
+        android:layout_below="@+id/categorieHeroreTextView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dimen10"
         android:maxWidth="@dimen/maxSize200"
-        android:maxHeight="@dimen/maxSize200"/>
+        android:maxHeight="@dimen/maxSize200" />
 
+    <TextView
+        android:id="@+id/descriptionTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen10"
+        android:layout_below="@+id/imageHeroeImageView"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:text="@string/descripcion" />
 
 </RelativeLayout>

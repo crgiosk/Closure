@@ -11,12 +11,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val fragmentTransaction: FragmentTransaction = supportFragmentManager.beginTransaction()
+        /*val fragmentTransaction: FragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.add(
             R.id.containerMain,
             HeroesFragment.newInstance(),
             HeroesFragment.TAG
         )
-        fragmentTransaction.commit()
+        fragmentTransaction.commit()*/
     }
 }

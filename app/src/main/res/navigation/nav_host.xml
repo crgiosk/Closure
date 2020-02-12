@@ -2,4 +2,28 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_host" />
+    android:id="@+id/nav_host"
+    app:startDestination="@id/heroesFragment">
+    <fragment
+        android:id="@+id/heroesFragment"
+        android:name="com.wiedii.myapplication.view.fragments.HeroesFragment"
+        android:label="fragment_heroes"
+        tools:layout="@layout/fragment_heroes" >
+        <action
+            android:id="@+id/action_heroesFragment_to_detailHeroeFragment"
+            app:destination="@id/detailHeroeFragment" />
+        <action
+            android:id="@+id/action_heroesFragment_to_nuevoHeroeFragment"
+            app:destination="@id/nuevoHeroeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailHeroeFragment"
+        android:name="com.wiedii.myapplication.view.fragments.DetailHeroeFragment"
+        android:label="fragment_detail_heroe"
+        tools:layout="@layout/fragment_detail_heroe" />
+    <fragment
+        android:id="@+id/nuevoHeroeFragment"
+        android:name="com.wiedii.myapplication.view.fragments.NuevoHeroeFragment"
+        android:label="fragment_nuevo_heroe2"
+        tools:layout="@layout/fragment_nuevo_heroe" />
+</navigation>

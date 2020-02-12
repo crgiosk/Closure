@@ -9,6 +9,21 @@
         android:id="@+id/recyclerViewHeroes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:listitem="@layout/item_heroe"/>
+        tools:listitem="@layout/item_heroe" />
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/dimen10"
+        android:layout_margin="@dimen/dimen10">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/nuevoHeroeFabButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:background="@drawable/style_button"
+            android:src="@android:drawable/ic_input_add" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </FrameLayout>
