@@ -30,7 +30,7 @@ class NuevoHeroeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupListener()
+        //setupListener()
     }
 
     fun setupListener(){
