@@ -10,4 +10,6 @@ class HeroeRepositoryImpl(private val heroeDAO: HeroeDAO): HeroeRepository {
 
     override fun insertHeroe(heroe: Heroes): Completable = heroeDAO.insertHeroe(heroe)
 
+    override fun updateHeroe(heroe: Heroes): Completable = heroeDAO.updateHeroe(heroe)
+
 }

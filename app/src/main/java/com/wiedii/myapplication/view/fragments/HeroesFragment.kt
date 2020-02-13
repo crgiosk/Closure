@@ -6,11 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.wiedii.myapplication.classes.Heroes
 import com.wiedii.myapplication.view.adapters.HeroesAdapter
 import com.wiedii.myapplication.R
@@ -24,11 +23,32 @@ class HeroesFragment : Fragment() {
     private lateinit var adapterHeroes: HeroesAdapter
     private val heroeViewModel: HeroeViewModel by viewModel()
 
+    private fun setHandlers() {
+        heroeViewModel.getHeroesLiveData().observe(viewLifecycleOwner, Observer { state ->
+            when (state) {
+                is UiState.Loading -> {
+                    Log.e(TAG, "Cargando...")
+                }
+
+                is UiState.OnSuccess<*> -> {
+                    Log.e(TAG, "Pintar elementos.")
+                    swipeRefresh.isRefreshing = false
+                    adapterHeroes.setData((state.data) as MutableList<Heroes>)
+                }
+
+                is UiState.OnError -> {
+                    Log.e(TAG, "Somethin wrong : ${state.message}")
+                }
+            }
+        })
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.e(TAG,"On create")
-        heroeViewModel.getHeroes()
+        Log.e(TAG, "On create")
+        getHeroes()
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,28 +64,21 @@ class HeroesFragment : Fragment() {
         setHandlers()
     }
 
-    private fun setHandlers(){
-        heroeViewModel.getHeroesLiveData().observe(viewLifecycleOwner, Observer { state ->
-            when (state){
-                is UiState.Loading -> {
-                    Log.e(TAG,"Cargando...")
-                }
+    override fun onResume() {
+        super.onResume()
+        getHeroes()
+    }
 
-                is UiState.OnSuccess <*> -> {
-                    Log.e(TAG,"Pintar elementos.")
-                    adapterHeroes.setData((state.data) as MutableList<Heroes>)
-                }
-
-                is UiState.OnError -> {
-                    Log.e(TAG,"Somethin wrong : ${state.message}")
-                }
-            }
-        })
+    private fun getHeroes(){
+        heroeViewModel.getHeroes()
     }
 
     fun setOClickListeners() {
         nuevoHeroeFabButton.setOnClickListener {
             findNavController().navigate(R.id.action_heroesFragment_to_nuevoHeroeFragment)
+        }
+        swipeRefresh.setOnRefreshListener {
+            getHeroes()
         }
     }
 
@@ -124,12 +137,19 @@ class HeroesFragment : Fragment() {
     }
 
     fun initUi() {
-        adapterHeroes = HeroesAdapter {
-            val bundle = Bundle()
-            bundle.putSerializable("heroe", it)
-            findNavController().navigate(R.id.action_heroesFragment_to_detailHeroeFragment, bundle)
-            //launchFragment(DetailHeroeFragment.newInstance(bundle),DetailHeroeFragment.TAG)
-        }
+        adapterHeroes = HeroesAdapter(
+            clickClosure = {
+                val bundle = Bundle()
+                bundle.putSerializable("heroe", it)
+                findNavController().navigate(R.id.action_heroesFragment_to_detailHeroeFragment, bundle)
+                //launchFragment(DetailHeroeFragment.newInstance(bundle),DetailHeroeFragment.TAG)
+            },
+            clickClosureUpdate = {
+                val bundle = Bundle()
+                bundle.putSerializable("heroe", it)
+                findNavController().navigate(R.id.action_heroesFragment_to_updateHeroFragment, bundle)
+            }
+        )
 
         recyclerViewHeroes.run {
             layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)

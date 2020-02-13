@@ -15,6 +15,8 @@ class HeroeViewModel(private val heroeRepository: HeroeRepository) : ViewModel()
 
     private val saveHeroeMutableLiveData: MutableLiveData<UiState> = MutableLiveData()
 
+    private val updateHeroeMutableLiveData: MutableLiveData<UiState> = MutableLiveData()
+
     private val subscriptor = CompositeDisposable()
 
     fun getHeroesLiveData(): LiveData<UiState> = getHeroesMutableLiveData
@@ -68,6 +70,31 @@ class HeroeViewModel(private val heroeRepository: HeroeRepository) : ViewModel()
                                 it.message ?: "Error inesperado"
                             )
                         )
+                    }
+                )
+        )
+    }
+
+    fun updateHero(heroe: Heroes) {
+        subscriptor.add(
+            heroeRepository.updateHeroe(
+                Heroes(
+                    id = heroe.id,
+                    nombre = heroe.nombre,
+                    tipo = heroe.tipo,
+                    categoria = heroe.categoria,
+                    descripcion = heroe.descripcion,
+                    imageUrl = heroe.imageUrl
+                )
+            ).doOnSubscribe {
+                updateHeroeMutableLiveData.postValue(UiState.Loading)
+            }.subscribeOn(Schedulers.io())
+                .subscribeBy(
+                    onComplete = {
+                        updateHeroeMutableLiveData.postValue(UiState.OnSuccess(true))
+                    },
+                    onError = {
+                        updateHeroeMutableLiveData.postValue(UiState.OnError("Error inesperado ${it.message}"))
                     }
                 )
         )

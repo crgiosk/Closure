@@ -15,19 +15,41 @@
         <action
             android:id="@+id/action_heroesFragment_to_nuevoHeroeFragment"
             app:destination="@id/nuevoHeroeFragment" />
+        <action
+            android:id="@+id/action_heroesFragment_to_updateHeroFragment"
+            app:destination="@id/updateHeroFragment2" />
     </fragment>
     <fragment
         android:id="@+id/detailHeroeFragment"
         android:name="com.wiedii.myapplication.view.fragments.DetailHeroeFragment"
         android:label="fragment_detail_heroe"
-        tools:layout="@layout/fragment_detail_heroe" />
+        tools:layout="@layout/fragment_detail_heroe" >
+        <argument
+            android:name="heroe"
+            app:argType="com.wiedii.myapplication.classes.Heroes" />
+    </fragment>
     <fragment
         android:id="@+id/nuevoHeroeFragment"
-        android:name="com.wiedii.myapplication.view.fragments.NuevoHeroeFragment"
+        android:name="com.wiedii.myapplication.view.fragments.NewHeroeFragment"
         android:label="fragment_nuevo_heroe2"
-        tools:layout="@layout/fragment_nuevo_heroe" >
+        tools:layout="@layout/fragment_new_heroe" >
         <action
-            android:id="@+id/action_nuevoHeroeFragment_to_heroesFragment2"
+                android:id="@+id/action_nuevoHeroeFragment_to_heroesFragment"
             app:destination="@id/heroesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/updateHeroFragment2"
+        android:name="com.wiedii.myapplication.view.fragments.UpdateHeroFragment"
+        android:label="fragment_update_hero"
+        tools:layout="@layout/fragment_update_hero" >
+        <action
+            android:id="@+id/action_updateHeroFragment_to_heroesFragment"
+            app:destination="@id/heroesFragment" />
+        <action
+            android:id="@+id/action_updateHeroFragment_to_detailHeroeFragment"
+            app:destination="@id/detailHeroeFragment" />
+        <argument
+            android:name="heroe"
+            app:argType="com.wiedii.myapplication.classes.Heroes" />
     </fragment>
 </navigation>

@@ -13,10 +13,10 @@ import com.wiedii.myapplication.R
 import com.wiedii.myapplication.classes.Heroes
 import com.wiedii.myapplication.viewmodels.HeroeViewModel
 import com.wiedii.myapplication.viewmodels.UiState
-import kotlinx.android.synthetic.main.fragment_nuevo_heroe.*
+import kotlinx.android.synthetic.main.fragment_new_heroe.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class NuevoHeroeFragment : Fragment() {
+class NewHeroeFragment : Fragment() {
 
     private val heroeViewModel: HeroeViewModel by viewModel()
     override fun onCreateView(
@@ -24,7 +24,7 @@ class NuevoHeroeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_nuevo_heroe, container, false)
+        return inflater.inflate(R.layout.fragment_new_heroe, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -57,7 +57,7 @@ class NuevoHeroeFragment : Fragment() {
                 is UiState.OnSuccess<*> -> {
                     Log.e(TAG, "Mensaje guardado")
                     clearFields()
-                    findNavController().navigate(R.id.action_nuevoHeroeFragment_to_heroesFragment2)
+                    findNavController().navigate(R.id.action_nuevoHeroeFragment_to_heroesFragment)
                 }
 
                 is UiState.OnError -> {
@@ -77,7 +77,7 @@ class NuevoHeroeFragment : Fragment() {
     }
 
     companion object {
-        const val TAG = "NuevoHeroeFragment"
+        const val TAG = "NewHeroeFragment"
     }
 
 

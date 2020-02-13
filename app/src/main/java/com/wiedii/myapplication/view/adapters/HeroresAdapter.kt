@@ -8,8 +8,10 @@ import com.wiedii.myapplication.R
 import com.wiedii.myapplication.classes.Heroes
 import kotlinx.android.synthetic.main.item_heroe.view.*
 
-class HeroesAdapter(val clickClosure: (Heroes) -> Unit) :
-    RecyclerView.Adapter<HeroesAdapter.ViewHolder>() {
+class HeroesAdapter(
+    val clickClosure: (Heroes) -> Unit,
+    val clickClosureUpdate: (Heroes) -> Unit
+) : RecyclerView.Adapter<HeroesAdapter.ViewHolder>() {
 
     private var listHerores: MutableList<Heroes> = mutableListOf()
 
@@ -48,6 +50,15 @@ class HeroesAdapter(val clickClosure: (Heroes) -> Unit) :
         fun bindClick(heroe: Heroes){
             itemView.item_heroe.setOnClickListener {
                 clickClosure(heroe)
+            }
+
+            itemView.setOnCreateContextMenuListener { menu, v, menuInfo ->
+                val option = menu.add(R.string.update_heroe)
+
+                option.setOnMenuItemClickListener {
+                    clickClosureUpdate(heroe)
+                    false
+                }
             }
         }
     }
