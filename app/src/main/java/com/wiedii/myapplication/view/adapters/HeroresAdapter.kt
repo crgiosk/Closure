@@ -13,9 +13,13 @@ class HeroesAdapter(val clickClosure: (Heroes) -> Unit) :
 
     private var listHerores: MutableList<Heroes> = mutableListOf()
 
-    fun setData(heroes: ArrayList<Heroes>) {
+    fun setData(heroes: MutableList<Heroes>) {
+        this.listHerores.run {
+            removeAll(this)
+        }
         this.listHerores.clear()
         this.listHerores.addAll(heroes)
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

@@ -10,7 +10,7 @@ import io.reactivex.Flowable
 @Dao
 interface HeroeDAO {
 
-    @Query("SELECT * FROM heroes")
+    @Query("SELECT * FROM heroes ORDER BY id DESC")
     fun getAllHeroes(): Flowable<List<Heroes>>
 
     @Insert

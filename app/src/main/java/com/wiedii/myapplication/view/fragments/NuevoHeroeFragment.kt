@@ -2,18 +2,17 @@ package com.wiedii.myapplication.view.fragments
 
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-
+import androidx.navigation.fragment.findNavController
 import com.wiedii.myapplication.R
 import com.wiedii.myapplication.classes.Heroes
 import com.wiedii.myapplication.viewmodels.HeroeViewModel
 import com.wiedii.myapplication.viewmodels.UiState
-import kotlinx.android.synthetic.main.fragment_heroes.*
 import kotlinx.android.synthetic.main.fragment_nuevo_heroe.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -30,11 +29,12 @@ class NuevoHeroeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //setupListener()
+        setupListener()
+        setHandlers()
     }
 
-    fun setupListener(){
-        nuevoHeroeFabButton.setOnClickListener {
+    fun setupListener() {
+        guardarHeroeButton.setOnClickListener {
             heroeViewModel.saveHeroe(
                 Heroes(
                     nombre = nombreHeroeEditext.text.toString(),
@@ -47,11 +47,38 @@ class NuevoHeroeFragment : Fragment() {
         }
     }
 
-    fun setHandlers(){
+    fun setHandlers() {
+        heroeViewModel.saveHeroesLiveData().observe(viewLifecycleOwner, Observer { state ->
+            when (state) {
+                is UiState.Loading -> {
+                    Log.e(TAG, "Cargando...")
+                }
 
+                is UiState.OnSuccess<*> -> {
+                    Log.e(TAG, "Mensaje guardado")
+                    clearFields()
+                    findNavController().navigate(R.id.action_nuevoHeroeFragment_to_heroesFragment2)
+                }
+
+                is UiState.OnError -> {
+                    Log.e(TAG, "Error inesperado: ${state.message}")
+                    clearFields()
+                }
+            }
+        })
     }
 
+    private fun clearFields() {
+        nombreHeroeEditext.setText("")
+        tipoHeroeEditext.setText("")
+        categorieHeroreEditext.setText("")
+        descriptionEditext.setText("")
+        urlImagenEditext.setText("")
+    }
 
+    companion object {
+        const val TAG = "NuevoHeroeFragment"
+    }
 
 
 }

@@ -1,22 +1,34 @@
 package com.wiedii.myapplication.view.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.wiedii.myapplication.classes.Heroes
 import com.wiedii.myapplication.view.adapters.HeroesAdapter
 import com.wiedii.myapplication.R
+import com.wiedii.myapplication.viewmodels.HeroeViewModel
+import com.wiedii.myapplication.viewmodels.UiState
 import kotlinx.android.synthetic.main.fragment_heroes.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HeroesFragment : Fragment() {
 
     private lateinit var adapterHeroes: HeroesAdapter
+    private val heroeViewModel: HeroeViewModel by viewModel()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Log.e(TAG,"On create")
+        heroeViewModel.getHeroes()
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -28,13 +40,32 @@ class HeroesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initUi()
-        adapterHeroes.setData(heroes())
         setOClickListeners()
+        setHandlers()
+    }
+
+    private fun setHandlers(){
+        heroeViewModel.getHeroesLiveData().observe(viewLifecycleOwner, Observer { state ->
+            when (state){
+                is UiState.Loading -> {
+                    Log.e(TAG,"Cargando...")
+                }
+
+                is UiState.OnSuccess <*> -> {
+                    Log.e(TAG,"Pintar elementos.")
+                    adapterHeroes.setData((state.data) as MutableList<Heroes>)
+                }
+
+                is UiState.OnError -> {
+                    Log.e(TAG,"Somethin wrong : ${state.message}")
+                }
+            }
+        })
     }
 
     fun setOClickListeners() {
         nuevoHeroeFabButton.setOnClickListener {
-           findNavController().navigate(R.id.action_heroesFragment_to_nuevoHeroeFragment)
+            findNavController().navigate(R.id.action_heroesFragment_to_nuevoHeroeFragment)
         }
     }
 
@@ -109,22 +140,6 @@ class HeroesFragment : Fragment() {
 
     companion object {
         const val TAG = "HeroesFragment"
-
-        fun newInstance(bundle: Bundle? = null): HeroesFragment {
-            var fragment = HeroesFragment()
-            if (bundle != null) {
-                fragment.arguments = bundle
-            }
-            return fragment
-        }
     }
-
-    /*private fun launchFragment(fragment: Fragment, tag: String) {
-        val fragmentTransaction: FragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.containerMain, fragment, tag)
-        fragmentTransaction.addToBackStack(tag)
-        fragmentTransaction.commit()
-    }*/
-
 
 }

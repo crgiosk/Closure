@@ -37,6 +37,9 @@ class HeroeViewModel(private val heroeRepository: HeroeRepository) : ViewModel()
                                 it.message ?: "Error inesperado"
                             )
                         )
+                    },
+                    onComplete = {
+
                     }
                 )
         )

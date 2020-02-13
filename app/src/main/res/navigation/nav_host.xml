@@ -25,5 +25,9 @@
         android:id="@+id/nuevoHeroeFragment"
         android:name="com.wiedii.myapplication.view.fragments.NuevoHeroeFragment"
         android:label="fragment_nuevo_heroe2"
-        tools:layout="@layout/fragment_nuevo_heroe" />
+        tools:layout="@layout/fragment_nuevo_heroe" >
+        <action
+            android:id="@+id/action_nuevoHeroeFragment_to_heroesFragment2"
+            app:destination="@id/heroesFragment" />
+    </fragment>
 </navigation>
