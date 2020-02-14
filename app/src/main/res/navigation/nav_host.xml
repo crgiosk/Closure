@@ -37,5 +37,9 @@
         android:id="@+id/editHeroeFragment"
         android:name="com.wiedii.myapplication.view.fragments.EditHeroeFragment"
         android:label="fragment_edit_heroe"
-        tools:layout="@layout/fragment_edit_heroe" />
+        tools:layout="@layout/fragment_edit_heroe" >
+        <action
+            android:id="@+id/action_editHeroeFragment_to_heroesFragment"
+            app:destination="@id/heroesFragment" />
+    </fragment>
 </navigation>

@@ -12,4 +12,6 @@ class HeroeRepositoryImpl(private val heroeDAO: HeroeDAO): HeroeRepository {
 
     override fun deleteHeroe(idheroe : Int): Completable = heroeDAO.deleteHeroe(idheroe)
 
+    override fun updateHeroe(heroe: Heroes): Completable = heroeDAO.updateHeroe(heroe)
+
 }

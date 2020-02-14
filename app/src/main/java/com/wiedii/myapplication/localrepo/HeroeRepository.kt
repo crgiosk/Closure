@@ -12,4 +12,6 @@ interface HeroeRepository {
 
     fun deleteHeroe(idheroe: Int): Completable
 
+    fun updateHeroe(heroe: Heroes): Completable
+
 }

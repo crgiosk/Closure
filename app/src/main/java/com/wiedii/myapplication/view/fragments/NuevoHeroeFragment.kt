@@ -51,6 +51,9 @@ class NuevoHeroeFragment : Fragment() {
 
     }
 
+
+
+
     fun setHandlers() {
         heroeViewModel.saveHeroesLiveData().observe(viewLifecycleOwner, Observer { state ->
             when (state) {
