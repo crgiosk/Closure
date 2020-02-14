@@ -15,6 +15,9 @@
         <action
             android:id="@+id/action_heroesFragment_to_nuevoHeroeFragment"
             app:destination="@id/nuevoHeroeFragment" />
+        <action
+            android:id="@+id/action_heroesFragment_to_editHeroeFragment"
+            app:destination="@id/editHeroeFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailHeroeFragment"
@@ -30,4 +33,9 @@
             android:id="@+id/action_nuevoHeroeFragment_to_heroesFragment2"
             app:destination="@id/heroesFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/editHeroeFragment"
+        android:name="com.wiedii.myapplication.view.fragments.EditHeroeFragment"
+        android:label="fragment_edit_heroe"
+        tools:layout="@layout/fragment_edit_heroe" />
 </navigation>

@@ -17,6 +17,7 @@
         app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:errorEnabled="true"
         app:layout_constraintTop_toTopOf="parent">
 
         <EditText
@@ -30,6 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/categoria_heroe"
+        app:errorEnabled="true"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         app:layout_constraintBottom_toTopOf="@+id/textInputLayout3"
         app:layout_constraintEnd_toEndOf="parent"
@@ -71,7 +73,7 @@
         app:layout_constraintBottom_toTopOf="@+id/textInputLayout5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
 
         <EditText
             android:id="@+id/descriptionEditext"
@@ -93,7 +95,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout4">
 
         <EditText
-            android:id="@+id/urlImagenEditext"
+                android:id="@+id/urlImagenEditext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:layout_editor_absoluteY="592dp" />

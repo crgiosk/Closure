@@ -15,4 +15,14 @@ interface HeroeDAO {
 
     @Insert
     fun insertHeroe(heroe: Heroes): Completable
+
+    @Query("DELETE FROM heroes WHERE id = :idheroe")
+    fun deleteHeroe(idheroe : Int):Completable
+
+
+
+
 }
+
+//  @Query("DELETE FROM heroes WHERE id = :idheroe")
+//    fun deleteHeroe(idheroe: Heroes):

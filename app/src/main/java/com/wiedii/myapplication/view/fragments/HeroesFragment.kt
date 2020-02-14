@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.wiedii.myapplication.classes.Heroes
 import com.wiedii.myapplication.view.adapters.HeroesAdapter
 import com.wiedii.myapplication.R
+import com.wiedii.myapplication.view.fragments.DetailHeroeFragment.Companion.TAG
 import com.wiedii.myapplication.viewmodels.HeroeViewModel
 import com.wiedii.myapplication.viewmodels.UiState
 import kotlinx.android.synthetic.main.fragment_heroes.*
@@ -60,6 +61,26 @@ class HeroesFragment : Fragment() {
                     Log.e(TAG,"Somethin wrong : ${state.message}")
                 }
             }
+        })
+
+        heroeViewModel.deleteHeroesLiveData().observe(viewLifecycleOwner, Observer {state ->
+
+            when (state){
+                is UiState.Loading -> {
+                    Log.e(TAG,"Cargando...")
+                }
+
+                is UiState.OnSuccess <*> -> {
+                    heroeViewModel.getHeroes()
+                }
+
+
+                is UiState.OnError -> {
+                    Log.e(TAG,"Somethin wrong : ${state.message}")
+                }
+            }
+
+
         })
     }
 
@@ -124,12 +145,25 @@ class HeroesFragment : Fragment() {
     }
 
     fun initUi() {
-        adapterHeroes = HeroesAdapter {
-            val bundle = Bundle()
-            bundle.putSerializable("heroe", it)
-            findNavController().navigate(R.id.action_heroesFragment_to_detailHeroeFragment, bundle)
-            //launchFragment(DetailHeroeFragment.newInstance(bundle),DetailHeroeFragment.TAG)
-        }
+        adapterHeroes = HeroesAdapter(
+            clickClosure = {
+                val bundle = Bundle()
+                bundle.putSerializable("heroe", it)
+                findNavController().navigate(R.id.action_heroesFragment_to_detailHeroeFragment, bundle)
+
+            }, clickClosureUpdate = {
+                val bundle = Bundle()
+                bundle.putSerializable("heroe", it)
+                findNavController().navigate(R.id.action_heroesFragment_to_editHeroeFragment, bundle)
+            }, clickClosureDelete = {
+
+     /*           val bundle=Bundle()
+                bundle.putSerializable("heroe",it)
+                findNavController().navigate(R.id.heroesFragment)*/
+                heroeViewModel.eliminar(it.id)
+
+            }
+        )
 
         recyclerViewHeroes.run {
             layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
@@ -137,9 +171,11 @@ class HeroesFragment : Fragment() {
             adapter = adapterHeroes
         }
     }
-
     companion object {
         const val TAG = "HeroesFragment"
     }
 
 }
+
+
+

@@ -9,4 +9,7 @@ interface HeroeRepository {
     fun getHeroes(): Flowable<List<Heroes>>
 
     fun insertHeroe(heroe: Heroes): Completable
+
+    fun deleteHeroe(idheroe: Int): Completable
+
 }

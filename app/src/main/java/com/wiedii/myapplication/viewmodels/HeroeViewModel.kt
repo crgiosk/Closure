@@ -15,10 +15,14 @@ class HeroeViewModel(private val heroeRepository: HeroeRepository) : ViewModel()
 
     private val saveHeroeMutableLiveData: MutableLiveData<UiState> = MutableLiveData()
 
+    private val deleteHeroeMutableLiveData: MutableLiveData<UiState> = MutableLiveData()
+
     private val subscriptor = CompositeDisposable()
 
     fun getHeroesLiveData(): LiveData<UiState> = getHeroesMutableLiveData
     fun saveHeroesLiveData(): LiveData<UiState> = saveHeroeMutableLiveData
+    fun deleteHeroesLiveData(): LiveData<UiState> = deleteHeroeMutableLiveData
+
 
 
     fun getHeroes() {
@@ -71,6 +75,27 @@ class HeroeViewModel(private val heroeRepository: HeroeRepository) : ViewModel()
                     }
                 )
         )
+    }
+
+    fun eliminar(idHeroe: Int){
+        subscriptor.add(
+            heroeRepository.deleteHeroe(idHeroe).doOnSubscribe {
+                deleteHeroeMutableLiveData.postValue(UiState.Loading)
+            }.subscribeOn(Schedulers.io())
+                .subscribeBy(
+                    onComplete = {
+                        deleteHeroeMutableLiveData.postValue(UiState.OnSuccess(true))
+                    },
+                    onError = {
+                        deleteHeroeMutableLiveData.postValue(
+                            UiState.OnError(
+                                it.message ?: "Error inesperado"
+                            )
+                        )
+                    }
+                )
+        )
+
     }
 
 }

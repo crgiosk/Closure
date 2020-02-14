@@ -35,16 +35,20 @@ class NuevoHeroeFragment : Fragment() {
 
     fun setupListener() {
         guardarHeroeButton.setOnClickListener {
-            heroeViewModel.saveHeroe(
-                Heroes(
-                    nombre = nombreHeroeEditext.text.toString(),
-                    tipo = tipoHeroeEditext.text.toString(),
-                    categoria = categorieHeroreEditext.text.toString(),
-                    descripcion = descriptionEditext.text.toString(),
-                    imageUrl = urlImagenEditext.text.toString()
+            if (emptyvalideFieldsFields()) {
+                heroeViewModel.saveHeroe(
+                    Heroes(
+                        nombre = nombreHeroeEditext.text.toString(),
+                        tipo = tipoHeroeEditext.text.toString(),
+                        categoria = categorieHeroreEditext.text.toString(),
+                        descripcion = descriptionEditext.text.toString(),
+                        imageUrl = urlImagenEditext.text.toString()
+                    )
                 )
-            )
+            }
+
         }
+
     }
 
     fun setHandlers() {
@@ -66,6 +70,56 @@ class NuevoHeroeFragment : Fragment() {
                 }
             }
         })
+    }
+
+    private fun emptyvalideFieldsFields(): Boolean {
+        var valide: Boolean
+
+        nombreHeroeEditext.run {
+
+            if (this.text.toString().isNullOrEmpty()) {
+                textInputLayout2.error = "Obligatorio"
+                this.requestFocus()
+                valide = false
+            } else {
+                textInputLayout2.error = null
+                valide = true
+            }
+        }
+
+
+
+            if (categorieHeroreEditext.text.toString().isNullOrEmpty()) {
+            textInputLayout.error = "Obligatorio"
+            valide = false
+        } else {
+            textInputLayout2.error = null
+            valide = true
+        }
+            if (tipoHeroeEditext.text.toString().isNullOrEmpty()) {
+            textInputLayout3.error = "Obligatorio"
+            valide = false
+        } else {
+                textInputLayout3.error = null
+            valide = true
+        }
+            if (descriptionEditext.text.toString().isNullOrEmpty()) {
+            textInputLayout5.error = "Obligatorio"
+            valide = false
+        } else {
+                textInputLayout5.error = null
+            valide = true
+        }
+            if (urlImagenEditext.text.toString().isNullOrEmpty()) {
+                textInputLayout5.error = "Obligatorio"
+            valide = false
+        } else {
+            textInputLayout2.error = null
+            valide = true
+        }
+
+
+        return valide
     }
 
     private fun clearFields() {
