@@ -38,7 +38,7 @@ class NuevoHeroeFragment : Fragment() {
             if (emptyvalideFieldsFields()) {
                 heroeViewModel.saveHeroe(
                     Heroes(
-                        id=id+1,
+                        id=id,
                         nombre = nombreHeroeEditext.text.toString(),
                         tipo = tipoHeroeEditext.text.toString(),
                         categoria = categorieHeroreEditext.text.toString(),
