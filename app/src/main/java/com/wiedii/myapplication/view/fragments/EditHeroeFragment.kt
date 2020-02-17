@@ -28,6 +28,7 @@ import java.util.Observer
 
 class EditHeroeFragment : Fragment() {
     private val heroeViewModel: HeroeViewModel by viewModel()
+    private var idSelect: Int? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,10 +45,13 @@ class EditHeroeFragment : Fragment() {
 
         arguments.let {
             val heroe = it?.getSerializable("heroe") as Heroes
-
+            idSelect = heroe.id
             bind(heroe)
             upListener()
             updaHandlers()
+            upListener()
+            emptyvalideFieldsFields()
+
         }
 
 
@@ -88,6 +92,7 @@ class EditHeroeFragment : Fragment() {
             if (emptyvalideFieldsFields()) {
                 heroeViewModel.updateHeroe(
                     Heroes(
+                        id= idSelect!!,
                         nombre = nombreHeroeEditext.text.toString(),
                         tipo = tipoHeroeEditext.text.toString(),
                         categoria = categorieHeroreEditext.text.toString(),

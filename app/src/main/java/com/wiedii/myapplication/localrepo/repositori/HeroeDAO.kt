@@ -27,6 +27,3 @@ interface HeroeDAO {
 
 
 }
-
-//  @Query("DELETE FROM heroes WHERE id = :idheroe")
-//    fun deleteHeroe(idheroe: Heroes):

@@ -38,6 +38,7 @@ class NuevoHeroeFragment : Fragment() {
             if (emptyvalideFieldsFields()) {
                 heroeViewModel.saveHeroe(
                     Heroes(
+                        id=id+1,
                         nombre = nombreHeroeEditext.text.toString(),
                         tipo = tipoHeroeEditext.text.toString(),
                         categoria = categorieHeroreEditext.text.toString(),
@@ -75,7 +76,7 @@ class NuevoHeroeFragment : Fragment() {
         })
     }
 
-    private fun emptyvalideFieldsFields(): Boolean {
+     fun emptyvalideFieldsFields(): Boolean {
         var valide: Boolean
 
         nombreHeroeEditext.run {

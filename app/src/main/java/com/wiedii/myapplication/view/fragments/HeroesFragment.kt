@@ -82,6 +82,8 @@ class HeroesFragment : Fragment() {
 
 
         })
+
+
     }
 
     fun setOClickListeners() {

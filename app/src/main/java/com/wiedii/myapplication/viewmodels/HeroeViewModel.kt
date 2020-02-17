@@ -27,7 +27,6 @@ class HeroeViewModel(private val heroeRepository: HeroeRepository) : ViewModel()
     fun updateHeroesLiveData(): LiveData<UiState> = updateHeroeMutableLiveData
 
 
-
     fun getHeroes() {
         subscriptor.add(
             heroeRepository.getHeroes()
@@ -51,10 +50,12 @@ class HeroeViewModel(private val heroeRepository: HeroeRepository) : ViewModel()
                 )
         )
     }
+
     fun updateHeroe(heroe: Heroes) {
         subscriptor.add(
             heroeRepository.updateHeroe(
                 Heroes(
+                    id = heroe.id,
                     nombre = heroe.nombre,
                     tipo = heroe.tipo,
                     categoria = heroe.categoria,
@@ -83,6 +84,7 @@ class HeroeViewModel(private val heroeRepository: HeroeRepository) : ViewModel()
         subscriptor.add(
             heroeRepository.insertHeroe(
                 Heroes(
+
                     nombre = heroe.nombre,
                     tipo = heroe.tipo,
                     categoria = heroe.categoria,
@@ -107,7 +109,7 @@ class HeroeViewModel(private val heroeRepository: HeroeRepository) : ViewModel()
         )
     }
 
-    fun eliminar(idHeroe: Int){
+    fun eliminar(idHeroe: Int) {
         subscriptor.add(
             heroeRepository.deleteHeroe(idHeroe).doOnSubscribe {
                 deleteHeroeMutableLiveData.postValue(UiState.Loading)
